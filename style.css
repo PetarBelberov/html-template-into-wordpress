@@ -1,0 +1,29 @@
+/*
+Theme Name: HTML Template Into WordPress
+Theme URI: https://github.com/rachelmccollin/WPMU-DEV-Theme-Development-Series-Files/
+Description: Theme to accompany a series of posts on creating a WordPress theme from static HTML.
+Author: Rachel McCollin
+Author URI: https://rachelmccollin.com/
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: html-to-wp
+*/
+
+body {
+    padding-top: 56px;
+}
+
+.carousel-item {
+    height: 65vh;
+    min-height: 300px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.portfolio-item {
+    margin-bottom: 30px;
+}
