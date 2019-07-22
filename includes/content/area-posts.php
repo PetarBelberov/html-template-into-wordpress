@@ -13,6 +13,7 @@ $args = array(
 $arr_posts = new WP_Query($args)
 ?>
 
+<h1 class="my-4">Welcome to Modern Business</h1>
 <div class="row">
     <?php if ( $arr_posts->have_posts() ) : while ( $arr_posts->have_posts() ) : $arr_posts->the_post(); ?>
         <div id="post-<?php the_ID() ?>" <?php post_class('col-lg-4 mb-4') ?>>
@@ -25,7 +26,7 @@ $arr_posts = new WP_Query($args)
                     <p class="card-text"><?php echo $sentence['0'] . $sentence['1']; ?></p>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Learn More</a>
+                    <a href="<?php the_permalink(); ?>" class="btn btn-primary">Learn More</a>
                 </div>
             </div>
         </div>

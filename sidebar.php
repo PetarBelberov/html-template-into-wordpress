@@ -1,7 +1,17 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Johny_Domino
- * Date: 12.7.2019 г.
- * Time: 23:03
+ * The sidebar containing the main widget area
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
+ *
+ * @package Hedonist
  */
+
+if ( ! is_active_sidebar( 'sidebar-1' ) ) {
+    return;
+}
+?>
+
+<aside id="secondary" class="widget-area">
+    <?php dynamic_sidebar( 'sidebar-1' ); ?>
+</aside><!-- #secondary -->
