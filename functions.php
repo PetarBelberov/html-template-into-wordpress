@@ -91,3 +91,26 @@ add_action( 'wp_enqueue_scripts' , 'jpen_enqueue_assets' );
 
 // Add custom widgets and widget areas
 require get_template_directory() . '/custom-settings/categories-settings.php';
+
+//Add custom classes to anchor in wp_nav_menu
+function add_additional_class_on_li($classes, $item, $args) {
+    if($args->add_li_class) {
+        $classes[] = $args->add_li_class;
+    }
+    return $classes;
+}
+add_filter('nav_menu_css_class', 'add_additional_class_on_li', 1, 3);
+
+function add_additional_class_on_a($classes, $item, $args) {
+    if($args->add_a_class) {
+        $classes[] = $args->add_a_class;
+    }
+    return $classes;
+}
+add_filter('nav_menu_css_class', 'add_additional_class_on_a', 1, 3);
+
+//Function to add Meta Tags in Header without Plugin
+function add_meta_tags() {
+    echo '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">';
+}
+add_action('wp_head', 'add_meta_tags');

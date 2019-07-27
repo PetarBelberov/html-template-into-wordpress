@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html <?php language_attributes(); ?>>
 
 <head>
+    <meta charset="<?php bloginfo( 'charset' ); ?>">
+    <meta charset="<?php bloginfo( 'description' ); ?>">
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Modern Business - Start Bootstrap Template</title>
+    <?php wp_title(); ?>
     <?php wp_head(); ?>
 </head>
 
-<body>
+<body <?php body_class(); ?>>
 
 <!-- Navigation -->
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -21,85 +18,61 @@
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="about.html">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="services.html">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Portfolio
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                        <a class="dropdown-item" href="portfolio-1-col.html">1 Column Portfolio</a>
-                        <a class="dropdown-item" href="portfolio-2-col.html">2 Column Portfolio</a>
-                        <a class="dropdown-item" href="portfolio-3-col.html">3 Column Portfolio</a>
-                        <a class="dropdown-item" href="portfolio-4-col.html">4 Column Portfolio</a>
-                        <a class="dropdown-item" href="portfolio-item.html">Single Portfolio Item</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Blog
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                        <a class="dropdown-item" href="blog-home-1.html">Blog Home 1</a>
-                        <a class="dropdown-item" href="blog-home-2.html">Blog Home 2</a>
-                        <a class="dropdown-item" href="blog-post.html">Blog Post</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Other Pages
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                        <a class="dropdown-item" href="full-width.html">Full Width Page</a>
-                        <a class="dropdown-item" href="sidebar.html">Sidebar Page</a>
-                        <a class="dropdown-item" href="faq.html">FAQ</a>
-                        <a class="dropdown-item" href="404.html">404</a>
-                        <a class="dropdown-item" href="pricing.html">Pricing Table</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        <?php
+        /* Generate a navigation menu */
+        wp_nav_menu( array(
+            'container_class' => 'collapse navbar-collapse',
+            'container_id' => 'navbarResponsive',
+            'menu_class'        => 'navbar-nav ml-auto',
+            'add_li_class'  => 'nav-item',
+            'add_a_class'  => 'nav-link',
+        ) );
+        ?>
     </div>
 </nav>
-
+<!-- Navigation -->
+<?php if ( is_front_page() ) : ?> <!-- Checks whether is a front page and visualise the slider -->
 <header>
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <?php
+    //Display Posts From Specific Category
+    $args = array(
+        'post_type' => 'post',
+        'orderby' => 'date',
+        'post_status' => 'publish',
+        'category_name' => 'top-3',
+        'posts_per_page' => 3,
+    );
+    //Use WP_Query class to fetch the posts
+    $arr_posts = new WP_Query($args)
+    ?>
+    <!-- Slider -->
+    <div id="carouselExampleIndicators" <?php post_class('carousel slide'); ?> data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
             <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
             <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
-            <!-- Slide One - Set the background image for this slide in the line below -->
-            <div class="carousel-item active" style="background-image: url('http://placehold.it/1900x1080')">
+            <?php $counter = 0; ?>
+            <?php if ($arr_posts->have_posts()) : while ($arr_posts->have_posts()) : $arr_posts->the_post() ?>
+            <?php
+            if ($counter == 0) :
+                $active = ' active';
+            else :
+                $active = '';
+            ?>
+            <?php endif; ?>
+            <div id="carousel-item-<?php the_ID(); ?>" class="carousel-item<?php echo $active ?>" style="background-image: url('<?php echo get_the_post_thumbnail_url(); ?>')">
                 <div class="carousel-caption d-none d-md-block">
-                    <h3>First Slide</h3>
-                    <p>This is a description for the first slide.</p>
+                    <h3><?php the_title(); ?></h3>
+                    <p><?php the_excerpt(); ?></p>
+                    <?php
+                    $counter++;
+                    $active = '';
+                    ?>
                 </div>
             </div>
-            <!-- Slide Two - Set the background image for this slide in the line below -->
-            <div class="carousel-item" style="background-image: url('http://placehold.it/1900x1080')">
-                <div class="carousel-caption d-none d-md-block">
-                    <h3>Second Slide</h3>
-                    <p>This is a description for the second slide.</p>
-                </div>
-            </div>
-            <!-- Slide Three - Set the background image for this slide in the line below -->
-            <div class="carousel-item" style="background-image: url('http://placehold.it/1900x1080')">
-                <div class="carousel-caption d-none d-md-block">
-                    <h3>Third Slide</h3>
-                    <p>This is a description for the third slide.</p>
-                </div>
-            </div>
+            <?php endwhile; endif; ?>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -110,4 +83,9 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
+    <!-- Slider -->
 </header>
+<?php endif; ?>
+
+<!-- Page Content -->
+<div class="container">

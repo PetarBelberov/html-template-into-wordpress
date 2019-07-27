@@ -4,9 +4,6 @@
 
 <?php get_header(); ?>
 
-  <!-- Page Content -->
-  <div class="container">
-
     <!-- Marketing Icons Section -->
     <?php get_template_part( 'includes/content/area-posts' ); ?>
     <!-- /.row -->
