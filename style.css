@@ -27,3 +27,20 @@ body {
 .portfolio-item {
     margin-bottom: 30px;
 }
+
+/*Single post*/
+.entry-title {
+    padding-bottom: 2rem;
+}
+
+.single-post-video {
+    max-width: 100%;
+    height: 400px;
+}
+
+@media screen and (max-width: 960px) {
+    .single-post-video {
+        max-width: 100%;
+        height: 219px;
+    }
+}

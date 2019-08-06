@@ -29,7 +29,6 @@ $arr_posts = new WP_Query($args);
         <div class="col-lg-6">
 
             <?php
-            $url = get_post_meta( get_the_ID(), 'html_to_wp_video_url', true );
             parse_str( parse_url( $url, PHP_URL_QUERY ), $my_array_of_vars );
             ?>
             <iframe width="550" height="300" src="https://www.youtube.com/embed/<?php echo $my_array_of_vars['v']?>"></iframe>
