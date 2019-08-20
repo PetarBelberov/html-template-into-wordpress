@@ -127,6 +127,7 @@ function add_additional_class_on_li($classes, $item, $args) {
 }
 add_filter('nav_menu_css_class', 'add_additional_class_on_li', 1, 3);
 
+//Add custom classes to anchor in wp_nav_menu
 function add_additional_class_on_a($classes, $item, $args) {
     if($args->add_a_class) {
         $classes[] = $args->add_a_class;
@@ -145,38 +146,90 @@ add_action('wp_head', 'add_meta_tags');
 // disable for posts
 //add_filter('use_block_editor_for_post', '__return_false', 10);
 
+// Admin notices functionality in the admin post screen
 function html_to_wp_admin_notice() {
     $screen = get_current_screen();
     $post = get_post();
     $post_id = $post->ID;
-    // Only render this notice in the post editor.
-    if ( ! $screen || 'post' !== $screen->base ) {
-        return;
-    }
-    // Render the notice's HTML.
-    // Each notice should be wrapped in a <div>
-    // with a 'notice' class.
-    if(!has_post_thumbnail()) {
-//        html_to_wp_enqueue_admin($screen->base);
-        wp_enqueue_script('admin_notices', get_template_directory_uri() . '/js/admin_notices.js', array('jquery'), false, true);
 
-        echo '<div class="notice notice-error">
-        <p>This post has no featured image. Please set one.</p>
-        </div>';
-
-        $update_post = array(
-            'ID' => $post_id,
-            'post_status' => 'draft'
+    $post_categories = (get_the_category($post_id));
+    foreach ($post_categories as $post_category) {
+        $current_category_slug = $post_category->slug;
+        //Checks the current post category slug (Ternary Operators)
+        $img_or_video = (
+                        $current_category_slug == 'current-events' ||
+                        $current_category_slug == 'global-news'
+                        ? 'image'
+                        : 'video'
         );
-        wp_update_post($update_post);
-    }
-    else {
-        $update_post = array(
-            'ID' => $post_id,
-            'post_status' => 'publish'
-        );
-        wp_update_post($update_post);
-    }
 
+        $param = array(
+            'img_or_video' => $img_or_video,
+        );
+        if ($img_or_video == 'image') {
+
+            // Only render this notice in the post editor.
+            if ( ! $screen || 'post' !== $screen->base ) {
+                return;
+            }
+            if(!has_post_thumbnail()) { // Image thumbnail
+
+                wp_enqueue_script('admin_notices', get_template_directory_uri() . '/js/admin_notices.js', array('jquery'), false, true);
+                // passing '$img_or_video' parameter to javascript file
+                wp_localize_script( 'admin_notices', 'script_param', $param );
+
+                echo '<div class="notice notice-error">
+                <p>This post has no featured' . $img_or_video . '. Please set one.</p>
+                </div>';
+
+                $update_post = array(
+                    'ID' => $post_id,
+                    'post_status' => 'draft'
+                );
+                wp_update_post($update_post);
+            }
+            else {
+                $update_post = array(
+                    'ID' => $post_id,
+                    'post_status' => 'publish'
+                );
+                wp_update_post($update_post);
+            }
+
+        }
+        elseif ($img_or_video == 'video') {
+
+            if (count(get_the_category()) == 1) {
+                if ( ! $screen || 'post' !== $screen->base ) {
+                    return;
+                }
+                $url = get_post_meta( get_the_ID(), 'html_to_wp_video_url', true ); //Video URL from "Featured Video" meta box
+
+                if(!wp_http_validate_url($url)) { // Video thumbnail
+
+                    wp_enqueue_script('admin_notices', get_template_directory_uri() . '/js/admin_notices.js', array('jquery'), false, true);
+                    //passing '$img_or_video' parameter to javascript file
+                    wp_localize_script( 'admin_notices', 'script_param', $param );
+
+                    echo '<div class="notice notice-error">
+                <p>This post has no featured' . $img_or_video . '. Please set one.</p>
+                </div>';
+
+                    $update_post = array(
+                        'ID' => $post_id,
+                        'post_status' => 'draft'
+                    );
+                    wp_update_post($update_post);
+                }
+                else {
+                    $update_post = array(
+                        'ID' => $post_id,
+                        'post_status' => 'publish'
+                    );
+                    wp_update_post($update_post);
+                }
+            }
+        }
+    }
 };
 add_action( 'admin_notices', 'html_to_wp_admin_notice' );

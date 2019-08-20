@@ -26,58 +26,75 @@ function categories_options() {
     if ( !current_user_can( 'manage_options' ) )  {
         wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
     }
-
-    // variables for the field and option names
-    $opt_name = 'our_team_widget_title';
+    $opt_name = 'section-1';
     $hidden_field_name = 'our_team_submit_hidden';
-    $data_field_name = 'our_team_widget_title';
-
-    // Read in existing option value from database
-    $opt_val = get_option( $opt_name );
-
-    // See if the user has posted us some information
-    // If they did, this hidden field will be set to 'Y'
-    if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' ) {
     // Read their posted value
-    $opt_val = $_POST[ $data_field_name ];
+    $data_field_name = 'section-1[]';
 
-    // Save the posted value in the database
-    update_option( $opt_name, $opt_val );
+    if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' ) {
+        if(isset($_POST['section-1'])) {
+            $data = ($_POST['section-1']);
 
-    // Put a "settings saved" message on the screen
+            // Save the posted value in the database
+            update_option($opt_name, $data);
+        }
 
-    ?>
-    <div class="updated"><p><strong><?php _e('settings saved.', 'menu-test' ); ?></strong></p></div>
-    <?php
-
-}
+        // Put a "settings saved" message on the screen
+        ?>
+        <div class="updated"><p><strong><?php _e('settings saved.', 'menu-test' ); ?></strong></p></div>
+        <?php
+    }
 
 // Now display the settings editing screen
-
 echo '<div class="wrap">';
 
 // header
 echo "";
-echo "<h2><span class=\"dashicons dashicons-edit settings\"></span>&emsp;" . __( 'Our Team Plugin Title', 'menu-test' ) . "</h2>";
+echo "<h2><span class=\"dashicons dashicons-edit settings\"></span>&emsp;" . __( 'Posts Areas', 'menu-test' ) . "</h2>";
 
 // settings form
-
 ?>
-    <div id="our-team-description-settings">
-        <p>In this field you can change the title of the Our Team Area</p>
-    </div>
-    <form name="form1" method="post" action="">
+    <form class="container-posts-settings" name="form1" method="post" action="">
         <input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
+    <!--    Section 1-->
+        <div id="section-1">
+            <div class="checkbox-post">
+                <h3><?php _e("Section 1", 'menu-test' ); ?></h3>
+                <p><?php _e("Categories:", 'menu-test' ); ?></p>
+                <?php
+                $cat_args=array(
+                    'orderby' => 'name',
+                    'order' => 'ASC'
+                );
+                $checked_category_arr = get_option('section-1');
+                $categories = get_categories($cat_args);
+                $current_categories = array(); // Store the existed categories names
 
-        <p><?php _e("Our Team Title:", 'menu-test' ); ?>
-            <input type="text" name="<?php echo $data_field_name; ?>" value="<?php echo $opt_val; ?>" size="20">
-        </p><hr />
+                foreach ($categories as $category) {
+                    $current_categories[] = $category->name;
+                }
 
+                // Returns an array containing categories which exist in both arrays
+                $matched_category = array_intersect($checked_category_arr, $current_categories);
+                for ($i = 0; $i < sizeof($current_categories); $i++) {
+                    $category = $categories[$i];
+                    // Searches $matched_category array for current categories
+                    if(in_array($current_categories[$i], $matched_category)) {
+                        ?><input type="checkbox" checked="checked" value="<?php echo $category->cat_name; ?>" name="<?php echo $data_field_name; ?>"><?php echo $category->cat_name?><br><?php
+                    }
+                    else {
+                        ?><input type="checkbox" value="<?php echo $category->cat_name; ?>" name="<?php echo $data_field_name; ?>"><?php echo $category->cat_name?><br><?php
+                    }
+                } ?>
+
+            </div>
+            <div class="image-post">
+                <img src="<?php echo get_template_directory_uri() ?>/images/section-1.png">
+            </div>
+        </div>
         <p class="submit">
             <input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" />
         </p>
-
     </form>
-    </div>
 <?php
 }

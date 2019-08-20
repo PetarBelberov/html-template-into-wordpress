@@ -6,8 +6,9 @@
             <?php
                 $url = get_post_meta( get_the_ID(), 'html_to_wp_video_url', true );
                 parse_str( parse_url( $url, PHP_URL_QUERY ), $my_array_of_vars );
+                $embed_url = 'https://www.youtube.com/embed/';
             ?>
-            <iframe class="single-post-video" width="700" height="400" src="https://www.youtube.com/embed/<?php echo $my_array_of_vars['v']?>"></iframe>
+            <iframe class="single-post-video" width="700" height="400" src="<?php echo esc_url($embed_url.$my_array_of_vars['v'])?>"></iframe>
             <article id="post-<?php the_ID(); ?>" class="<?php post_class(); ?>">
                 <section class="entry-meta">
                     <?php echo get_the_date(); ?>

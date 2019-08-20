@@ -1,18 +1,24 @@
 <?php
+// Get the the checked category slug for this area
+$categories_names_arr = get_option('section-1');
+$category_id = array();
+foreach ($categories_names_arr as $categories_names) {
+    $category_id[] = get_cat_ID($categories_names);
+}
 
 //Display Posts From Specific Category
 $args = array(
     'post_type' => 'post',
     'orderby' => 'date',
     'post_status' => 'publish',
-    'category_name' => 'current-events + global-news',
+    'cat' => $category_id, //Display posts that have several categories, using category id
     'posts_per_page' => 5,
 );
 
 //Use WP_Query class to fetch the posts
-$arr_posts = new WP_Query($args)
-?>
+$arr_posts = new WP_Query($args);
 
+?>
 <h1 class="my-4">Welcome to Modern Business</h1>
 <div class="row">
     <?php if ( $arr_posts->have_posts() ) : while ( $arr_posts->have_posts() ) : $arr_posts->the_post(); ?>

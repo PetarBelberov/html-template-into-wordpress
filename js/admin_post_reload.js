@@ -1,11 +1,14 @@
 jQuery(document).ready(function($) {
     wp.data.subscribe(function () {
-        postsaving = wp.data.select('core/editor').isSavingPost();
-        autosaving = wp.data.select('core/editor').isAutosavingPost();
-        success = wp.data.select('core/editor').didPostSaveRequestSucceed();
-        if (postsaving || autosaving) {
+        var isSavingPost = wp.data.select('core/editor').isSavingPost();
+        var isAutosavingPost = wp.data.select('core/editor').isAutosavingPost();
 
-            window.location.href = window.location.href + '&refreshed=1';
+        if (isSavingPost && !isAutosavingPost) {
+
+            console.log(isSavingPost + isAutosavingPost);
+            setTimeout(function () {
+                location.reload();
+            }, 3000)
         }
     })
 });
