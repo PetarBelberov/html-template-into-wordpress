@@ -12,11 +12,9 @@
                 <?php get_template_part( 'includes/content-post-video' ); ?>
             <?php elseif (in_category('current-events')) : ?>
                 <?php get_template_part( 'includes/content-post-img' ); ?>
-            <?php elseif (in_category('global-news')) : ?>
+            <?php elseif (in_category(get_option('section-1')['categories_names'])) : ?>
                 <?php get_template_part( 'includes/content-post' ); ?>
             <?php endif; ?>
-
-            <?php var_dump(get_option('section-1')); ?>
         </article><!-- #post-## -->
 
     </div><!-- #content -->
