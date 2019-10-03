@@ -115,8 +115,9 @@ function html_to_wp_enqueue_admin($hook) {
 
 add_action('admin_enqueue_scripts', 'html_to_wp_enqueue_admin');
 
-// Add custom widgets and widget areas
+// Add custom code snippets
 require get_template_directory() . '/custom-settings/section-1-settings.php';
+require get_template_directory() . '/custom-settings/section-2-settings.php';
 
 //Add custom classes to anchor in wp_nav_menu
 function add_additional_class_on_li($classes, $item, $args) {

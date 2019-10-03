@@ -1,12 +1,23 @@
 <?php
+// Get the the checked category slug for this area
+$categories_names_arr = get_option('section-2')['categories_names'];
+$categories_order_by = get_option('section-2')['sort-by'];
+$asc_or_desc_order = get_option('section-2')['asc-or-desc'];
+$posts_per_page = get_option('section-2')['posts-per-page'];
+
+$category_id = array();
+foreach ($categories_names_arr as $categories_names) {
+    $category_id[] = get_cat_ID($categories_names);
+}
 
 //Display Posts From Specific Category
 $args = array(
     'post_type' => 'post',
-    'orderby' => 'date',
+    'orderby' => $categories_order_by,
+    'order' => $asc_or_desc_order,
     'post_status' => 'publish',
-    'category_name' => 'current-events',
-    'posts_per_page' => 5,
+    'cat' => $category_id, //Display posts that have several categories, using category id
+    'posts_per_page' => $posts_per_page,
 );
 
 //Use WP_Query class to fetch the posts

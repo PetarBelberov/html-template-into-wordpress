@@ -2,19 +2,19 @@
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 /** Step 2 (from text above). Register the above function using the admin_menu action hook */
-add_action( 'admin_menu', 'categories_settings' );
+add_action( 'admin_menu', 'categories_settings_s1' );
 
 /** Step 1. Function that contains the menu-building code */
-function categories_settings() {
-    $submenu_text = '<span class="submenu-text-edit">Settings &nbsp;</span>';
+function categories_settings_s1() {
+    $submenu_text = '<span class="submenu-text-edit">Section 1 &nbsp;</span>';
     $submenu_dashicon = '<span class="dashicons dashicons-edit submenu"></span>';
     // Adds a new item to the Settings administration menu via the add_options_page() function
     add_posts_page(
-            'Categories Settings',                          // page_title
+            'Categories Settings 1',                          // page_title
             $submenu_text . $submenu_dashicon,              // menu_title
             'edit_posts',                                   // capability
-            'categories_settings_identifier',               // menu_slug
-            'categories_options'                           // function
+            'categories_settings_identifier_1',               // menu_slug
+            'categories_options_s1'                           // function
     );
 }
 
@@ -22,7 +22,7 @@ function categories_settings() {
 //wp_enqueue_style( 'style-our-team', get_template_directory_uri() . '/widgets/hedonist-our-team/style-our-team.css' );
 
 /** Step 3. HTML output for the page */
-function categories_options() {
+function categories_options_s1() {
     if ( !current_user_can( 'manage_options' ) )  {
         wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
     }
@@ -44,6 +44,7 @@ function categories_options() {
             {
                 $data['sort-by'] = $select;
             }
+
             $merged_options = wp_parse_args( $data); // Merge arguments into defaults array
             // Save the posted value in the database
             update_option($opt_name, $merged_options);
@@ -108,7 +109,7 @@ echo "<h2><span class=\"dashicons dashicons-edit settings\"></span>&emsp;" . __(
                             <?php } ?>
                         </td>
                     </tr>
-                    <tr class="additional-settings" id="order-posts-by">
+                    <tr class="additional-settings" id="order-posts-by-1">
                         <th><?php _e("Sort posts by parameter:", 'menu-test' ); ?></th>
                         <td>
                             <select name="order-by-parameter[]">
@@ -119,7 +120,7 @@ echo "<h2><span class=\"dashicons dashicons-edit settings\"></span>&emsp;" . __(
                             </select>
                         </td>
                     </tr>
-                    <tr class="additional-settings" id="asc-or-desc">
+                    <tr class="additional-settings" id="asc-or-desc-2">
                         <th><?php _e("ASC or DESC order:", 'menu-test' ); ?></th>
                         <td>
                             <select name="asc-or-desc">
@@ -130,7 +131,7 @@ echo "<h2><span class=\"dashicons dashicons-edit settings\"></span>&emsp;" . __(
                             </select>
                         </td>
                     </tr>
-                    <tr class="additional-settings" id="posts-per-page">
+                    <tr class="additional-settings" id="posts-per-page-3">
                         <th><?php _e("Posts per page:", 'menu-test' ); ?></th>
                         <td>
                             <input type="number" name="posts-per-page" value="<?php echo $section_1_values['posts-per-page']; ?>" placeholder="Set a number:">
