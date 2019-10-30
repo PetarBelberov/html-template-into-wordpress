@@ -101,10 +101,12 @@ function html_to_wp_enqueue_assets() {
     wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/vendor/bootstrap/css/bootstrap.min.css' );
     wp_enqueue_script( 'bootstrap-js' , get_template_directory_uri() . '/vendor/bootstrap/js/bootstrap.bundle.min.js' , array( 'jquery' ) , false , true );
     wp_enqueue_script( 'jquery-js' , get_template_directory_uri() . '/vendor/jquery/jquery.min.js' , array( 'jquery' ) , false , true );
+
+    wp_enqueue_script( 'custom-js' , get_template_directory_uri() . '/custom-styles/custom.js' );
 }
 add_action( 'wp_enqueue_scripts' , 'html_to_wp_enqueue_assets' );
 
-function html_to_wp_enqueue_admin($hook) {
+function html_to_wp_enqueue_admin_post_page($hook) {
     // Only add to the edit.php admin page.
     // See WP docs.
     if ('post.php' !== $hook) {
@@ -112,12 +114,22 @@ function html_to_wp_enqueue_admin($hook) {
     }
     wp_enqueue_script( 'post_reload' , get_template_directory_uri() . '/js/admin_post_reload.js' , array( 'jquery' ) , false , true );
 }
+add_action('admin_enqueue_scripts', 'html_to_wp_enqueue_admin_post_page');
 
+// Enqueue in admin area
+function html_to_wp_enqueue_admin() {
+    wp_enqueue_media();
+    wp_enqueue_script( 'media-upload', get_template_directory_uri() . '/custom-styles/media-upload.js', array('jquery'), false , true );
+//    wp_enqueue_script('media-upload');
+}
 add_action('admin_enqueue_scripts', 'html_to_wp_enqueue_admin');
 
 // Add custom code snippets
 require get_template_directory() . '/custom-settings/section-1-settings.php';
 require get_template_directory() . '/custom-settings/section-2-settings.php';
+require get_template_directory() . '/custom-settings/section-3-settings.php';
+require get_template_directory() . '/custom-settings/section-4-settings.php';
+
 
 //Add custom classes to anchor in wp_nav_menu
 function add_additional_class_on_li($classes, $item, $args) {

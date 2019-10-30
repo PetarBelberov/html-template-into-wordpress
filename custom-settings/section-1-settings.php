@@ -7,7 +7,7 @@ add_action( 'admin_menu', 'categories_settings_s1' );
 /** Step 1. Function that contains the menu-building code */
 function categories_settings_s1() {
     $submenu_text = '<span class="submenu-text-edit">Section 1 &nbsp;</span>';
-    $submenu_dashicon = '<span class="dashicons dashicons-edit submenu"></span>';
+    $submenu_dashicon = '<span class="dashicons dashicons-format-aside"></span>';
     // Adds a new item to the Settings administration menu via the add_options_page() function
     add_posts_page(
             'Categories Settings 1',                          // page_title
@@ -67,7 +67,7 @@ echo '<div class="wrap">';
 
 // header
 echo "";
-echo "<h2><span class=\"dashicons dashicons-edit settings\"></span>&emsp;" . __( 'Posts Areas', 'menu-test' ) . "</h2>";
+echo "<h2><span class=\"dashicons dashicons-format-aside\"></span>&emsp;" . __( 'Posts Areas', 'menu-test' ) . "</h2>";
 
 // settings form
 ?>

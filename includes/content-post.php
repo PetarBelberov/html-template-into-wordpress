@@ -2,8 +2,10 @@
     <!-- Portfolio Item Row -->
     <h2 class="entry-title"><?php the_title(); ?></h2>
     <div class="row">
-        <div class="col-md-8">
-            <img class="img-fluid" src="<?php the_post_thumbnail(); ?>
+        <div class="col-md-12">
+            <?php if(has_post_thumbnail()) : ?>
+                <img class="img-fluid" src="<?php the_post_thumbnail(); ?>"</img>
+            <?php endif; ?>
         <article id="post-<?php the_ID(); ?>" class="<?php post_class(); ?>">
             <section class="entry-meta">
                 <?php echo get_the_date(); ?>
@@ -13,7 +15,7 @@
                 <?php the_content(); ?>
             </section><!-- .entry-content -->
 
-            </article>
+        </article>
         </div>
         <div class="col-md-4">
             <?php get_sidebar(); ?>
