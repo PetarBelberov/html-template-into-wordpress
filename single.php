@@ -6,7 +6,6 @@
 <div class="main">
 
     <div id="content" class="two-thirds left">
-<!--        && has_post_thumbnail())-->
         <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
             <?php if (in_category('video') && count(get_the_category()) == 1)  : ?>
                 <?php get_template_part( 'includes/content-post-video' ); ?>

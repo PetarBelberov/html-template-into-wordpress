@@ -34,28 +34,40 @@
 <?php if ( is_front_page() ) : ?> <!-- Checks whether is a front page and visualise the slider -->
 <header>
     <?php
+    // Get the the checked category slug for this area
+    $categories_names_arr = get_option('section-4')['categories_names'];
+    $categories_order_by = get_option('section-4')['sort-by'];
+    $asc_or_desc_order = get_option('section-4')['asc-or-desc'];
+    $posts_per_page = get_option('section-4')['posts-per-page'];
+
+    $category_id = array();
+    foreach ($categories_names_arr as $categories_names) {
+        $category_id[] = get_cat_ID($categories_names);
+    }
+
     //Display Posts From Specific Category
     $args = array(
         'post_type' => 'post',
-        'orderby' => 'date',
+        'orderby' => $categories_order_by,
+        'order' => $asc_or_desc_order,
         'post_status' => 'publish',
-        'category_name' => 'top-3',
-        'posts_per_page' => 3,
+        'cat' => $category_id, //Display posts that have several categories, using category id
     );
     //Use WP_Query class to fetch the posts
-    $arr_posts = new WP_Query($args)
+    $arr_posts = new WP_Query($args);
     ?>
     <!-- Slider -->
     <div id="carouselExampleIndicators" <?php post_class('carousel slide'); ?> data-ride="carousel">
         <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <?php for ($i = 0; $i < sizeof($arr_posts->get_posts()); $i++) : ?>
+                <li data-target="#carouselExampleIndicators" data-slide-to="<?php echo $i ?>" class="active"></li>
+            <?php endfor; ?>
         </ol>
         <div class="carousel-inner" role="listbox">
             <?php $counter = 0; ?>
             <?php if ($arr_posts->have_posts()) : while ($arr_posts->have_posts()) : $arr_posts->the_post() ?>
             <?php
+
             if ($counter == 0) :
                 $active = ' active';
             else :

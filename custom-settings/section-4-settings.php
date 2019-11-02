@@ -7,7 +7,7 @@ add_action( 'admin_menu', 'categories_settings_s4' );
 /** Step 1. Function that contains the menu-building code */
 function categories_settings_s4() {
     $submenu_text = '<span class="submenu-text-edit">Section 4 &nbsp;</span>';
-    $submenu_dashicon = '<span class="dashicons dashicons-video-alt3"></span>';
+    $submenu_dashicon = '<span class="dashicons dashicons-slides"></span>';
     // Adds a new item to the Settings administration menu via the add_options_page() function
     add_posts_page(
         'Categories Settings 4',                          // page_title
@@ -18,9 +18,6 @@ function categories_settings_s4() {
     );
 }
 
-// Include css and js stylesheets inside the widget
-//wp_enqueue_style( 'style-our-team', get_template_directory_uri() . '/widgets/hedonist-our-team/style-our-team.css' );
-
 /** Step 3. HTML output for the page */
 function categories_options_s4() {
     if ( !current_user_can( 'manage_options' ) )  {
@@ -29,15 +26,15 @@ function categories_options_s4() {
     $opt_name = 'section-4';
     $hidden_field_name = 'section_4_submit_hidden';
     // Read their posted value
-    $data = array();
+    $data = array([]);
     $order_by_parameters = array("none", "ID", "title", "name", "date", "modified", "rand");
     $asc_or_desc = array("ASC", "DESC");
-    $image = '';
 
     if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' ) {
         if(isset($_POST['categories_names'])) { // Checks if there is marked category
             $data['categories_names'] = $_POST['categories_names'];
             $data['asc-or-desc'] = $_POST['asc-or-desc'];
+            $data['posts-per-page'] = $_POST['posts-per-page'];
 
             // Get the value of multiple select option
             foreach ($_POST['order-by-parameter'] as $select)
@@ -67,7 +64,7 @@ function categories_options_s4() {
 
 // header
     echo "";
-    echo "<h2><span class=\"dashicons dashicons-video-alt3\"></span>&emsp;" . __( 'Posts Areas', 'menu-test' ) . "</h2>";
+    echo "<h2><span class=\"dashicons dashicons-slides\"></span>&emsp;" . __( 'Posts Areas', 'menu-test' ) . "</h2>";
 
 // settings form
     ?>
@@ -81,7 +78,7 @@ function categories_options_s4() {
                     <th><?php _e("Section 4", 'menu-test' ); ?></th>
                     <td class="image-post">
                         <img src="<?php echo get_template_directory_uri() ?>/images/section-4.png">
-                        <p class="description">(Section 3 looks like this.)</p>
+                        <p class="description">(Section 4 looks like this.)</p>
                     </td>
                 </tr>
                 <tr class="checkbox-post">
@@ -131,12 +128,10 @@ function categories_options_s4() {
                         </select>
                     </td>
                 </tr>
-                <tr class="additional-settings" id="upload-img">
-                    <th><?php _e("Upload image:", 'menu-test' ); ?></th>
+                <tr class="additional-settings" id="posts-per-page-4">
+                    <th><?php _e("Sliders:", 'menu-test' ); ?></th>
                     <td>
-                        <label for="image_url">Image</label>
-                        <input type="text" name="image_url" id="image_url" class="regular-text" value="<?php echo  get_option( 'image_url' )['upload_img'] ?>">
-                        <input type="button" name="upload-btn" id="upload-btn" class="button-secondary" value="Upload Image">
+                        <input type="number" name="posts-per-page" value="<?php echo $section_4_values['posts-per-page']; ?>" placeholder="Set a number:">
                     </td>
                 </tr>
                 </tbody>

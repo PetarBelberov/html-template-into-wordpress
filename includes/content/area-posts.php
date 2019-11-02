@@ -31,10 +31,7 @@ $arr_posts = new WP_Query($args);
             <div class="card h-100">
                 <h4 class="card-header"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
                 <div class="card-body">
-                    <?php
-                    $sentence = preg_split( '/(\.|!|\?)\s/', get_the_content(), 2, PREG_SPLIT_DELIM_CAPTURE );
-                    ?>
-                    <p class="card-text"><?php echo $sentence['0'] . $sentence['1']; ?></p>
+                    <p class="card-text"><?php echo get_the_excerpt(); ?></p>
                 </div>
                 <div class="card-footer">
                     <a href="<?php the_permalink(); ?>" class="btn btn-primary">Learn More</a>

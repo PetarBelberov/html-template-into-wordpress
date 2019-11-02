@@ -119,8 +119,8 @@ add_action('admin_enqueue_scripts', 'html_to_wp_enqueue_admin_post_page');
 // Enqueue in admin area
 function html_to_wp_enqueue_admin() {
     wp_enqueue_media();
-    wp_enqueue_script( 'media-upload', get_template_directory_uri() . '/custom-styles/media-upload.js', array('jquery'), false , true );
-//    wp_enqueue_script('media-upload');
+    wp_register_script( 'my-upload', get_template_directory_uri() . '/custom-styles/media-upload.js', array('jquery','media-upload','thickbox'));
+    wp_enqueue_script('my-upload');
 }
 add_action('admin_enqueue_scripts', 'html_to_wp_enqueue_admin');
 
