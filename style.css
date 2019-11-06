@@ -9,6 +9,23 @@ License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: html-to-wp
 */
+html {
+    overflow-x: hidden;
+}
+html,
+body {
+    height: 100%;
+    margin: 0 !important;
+}
+body {
+    word-wrap: break-word;
+    outline: 0;
+}
+
+.container {
+    position: relative;
+    min-height: 100%;
+}
 
 body {
     padding-top: 56px;
@@ -44,9 +61,70 @@ body {
     top: 2rem;
 }
 
+/* 404 error page */
+.jumbotron {
+    text-align: center;
+}
+
+.home-btn {
+    width: 200px;
+    margin: 0 auto;
+}
+
+/* Single post categories */
+.related-topics .categories-single-post .post-categories {
+    display: inline-block;
+}
+
+.related-topics .categories-single-post .post-categories li {
+    display: inline-block;
+    border-radius: .3rem;
+}
+
+.related-topics .categories-single-post .post-categories li a:hover {
+    color: #fff;
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.related-topics .categories-single-post .post-categories li a {
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    font-size: 1rem;
+    background-color: #6c757d;
+    border-color: #6c757d;
+    line-height: 1.5;
+    border-radius: .3rem;
+}
+
+.archive-posts div {
+    flex: 0 0 100%; !important;
+}
+
+.archive-posts div .a{
+    flex: 0 0 49% !important;
+    width: 50%;
+    margin: 0 auto;
+    padding-bottom: 2rem;
+}
+
+/* Footer */
+footer {
+    position: absolute;
+    width: 100%;
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+
 @media screen and (max-width: 960px) {
     .single-post-video {
         max-width: 100%;
         height: 219px;
+    }
+    .archive-posts div .a{
+        flex: 0 0 100% !important;
+        width: 100%;
     }
 }
