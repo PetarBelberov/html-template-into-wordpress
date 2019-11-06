@@ -9,7 +9,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package Html-template-into-wordpress
+ * @package html-template-into-wordpress
  */
 
 get_header();
@@ -20,8 +20,9 @@ get_header();
     <?php if ( have_posts() ) : ?>
     <?php
     $categories = get_the_category();
-    $category_id = $categories[0]->cat_ID;
-    $category_name = $categories[0]->name;
+    $category_id = get_queried_object()->cat_ID; // fetch the ID from the WordPress database.
+    $category_title = get_the_archive_title();
+
     //Display Posts From Specific Category
     $args = array(
         'cat' => $category_id,
@@ -33,7 +34,7 @@ get_header();
     $arr_posts = new WP_Query($args);
 
     ?>
-        <h1 class="my-4"><?php echo $category_name; ?></h1>
+        <h1 class="my-4"><?php echo $category_title; ?></h1>
         <div class="row justify-content-center archive-posts">
             <?php if ( $arr_posts->have_posts() ) : while ( $arr_posts->have_posts() ) : $arr_posts->the_post(); ?>
                 <div id="post-<?php the_ID() ?>" >

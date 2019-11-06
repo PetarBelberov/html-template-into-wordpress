@@ -4,19 +4,18 @@
 
 <?php get_header(); ?>
 
-    <!-- Marketing Icons Section -->
+    <!-- Posts Section Without Images -->
     <?php get_template_part( 'includes/content/area-posts' ); ?>
     <!-- /.row -->
 
-    <!-- Portfolio Section -->
+    <!-- Posts Section With Images -->
     <?php get_template_part('includes/content/area-posts-img'); ?>
     <!-- /.row -->
 
-    <!-- Features Section -->
+    <!-- Posts Section With Video -->
     <?php get_template_part('includes/content/area-video') ?>
     <!-- /.row -->
 
-<!--      SIDEBAR INCLUDE !-->
     <hr>
 
     <!-- Call to Action Section -->

@@ -1,14 +1,26 @@
+<?php
+/**
+ * Template part for displaying post content.
+ *
+ * @link https://codex.wordpress.org/Template_Hierarchy
+ *
+ * @package html-template-into-wordpress
+ */
+
+?>
+
 <?php while ( have_posts() ) : the_post(); //Open the loop ?>
     <!-- Portfolio Item Row -->
     <h2 class="entry-title"><?php the_title(); ?></h2>
     <div class="row">
         <div class="col-md-8">
-            <!--     Check for featured image       -->
+            <?php $url = get_post_meta( get_the_ID(), 'html_to_wp_video_url', true ); ?>
+            <!--     Checks for featured image       -->
             <?php if(has_post_thumbnail()) : ?>
                 <img class="img-fluid" src="<?php the_post_thumbnail(); ?>"</img>
-            <?php elseif (in_category('video') && count(get_the_category()) == 1) : ?>
+                <!--     Checks whether the video meta field is empty & whether the marked category is single      -->
+            <?php elseif (!empty($url) && count(get_the_category()) == 1) : ?>
                 <?php
-                $url = get_post_meta( get_the_ID(), 'html_to_wp_video_url', true );
                 parse_str( parse_url( $url, PHP_URL_QUERY ), $my_array_of_vars );
                 $embed_url = 'https://www.youtube.com/embed/';
                 ?>
@@ -32,6 +44,7 @@
         <!-- Related topics -->
         <div class="related-topics">
             <div class="categories-single-post">
+                <span>Related topics: </span>
                 <?php the_category(); ?>
             </div>
         </div>

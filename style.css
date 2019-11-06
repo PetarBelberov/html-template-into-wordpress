@@ -72,8 +72,13 @@ body {
 }
 
 /* Single post categories */
+.related-topics {
+    padding: 0 15px 0 15px;
+}
+
 .related-topics .categories-single-post .post-categories {
     display: inline-block;
+    padding: 0;
 }
 
 .related-topics .categories-single-post .post-categories li {

@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
  *
- * @package Html-template-into-wordpress
+ * @package html-template-into-wordpress
  */
 ?>
 
@@ -13,7 +13,7 @@
 
     <div id="content" class="two-thirds left">
         <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-            <?php get_template_part( 'includes/content-post-test' ); ?>
+            <?php get_template_part( 'includes/content', 'post' ); ?>
         </article><!-- #post-## -->
 
     </div><!-- #content -->
