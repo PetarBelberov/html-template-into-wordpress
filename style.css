@@ -11,6 +11,7 @@ Text Domain: html-to-wp
 */
 html {
     overflow-x: hidden;
+    margin-top: 0 !important;
 }
 html,
 body {
@@ -25,10 +26,6 @@ body {
 .container {
     position: relative;
     min-height: 100%;
-}
-
-body {
-    padding-top: 56px;
 }
 
 .carousel-item {
@@ -131,5 +128,11 @@ footer {
     .archive-posts div .a{
         flex: 0 0 100% !important;
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 601px) {
+    .admin-bar .navbar {
+        top: 0 !important;
     }
 }
