@@ -51,6 +51,10 @@ body {
     height: 400px;
 }
 
+.admin-bar .site-main {
+    margin-top: 4rem;
+}
+
 /* Prevent admin bar overlapping site navigation menu */
 .admin-bar .navbar {
     position: absolute;
