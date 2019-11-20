@@ -1,13 +1,12 @@
 /*
 Theme Name: HTML Template Into WordPress
-Theme URI: https://github.com/rachelmccollin/WPMU-DEV-Theme-Development-Series-Files/
-Description: Theme to accompany a series of posts on creating a WordPress theme from static HTML.
-Author: Rachel McCollin
-Author URI: https://rachelmccollin.com/
+Theme URI: https://github.com/PetarBelberov/html-template-into-wordpress/
+Description: Converted Bootstrap 4 template into WordPress custom theme
+Author: Petar Belberov
+Author URI: https://github.com/PetarBelberov/
 Version: 1.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: html-to-wp
 */
 html {
     overflow-x: hidden;
